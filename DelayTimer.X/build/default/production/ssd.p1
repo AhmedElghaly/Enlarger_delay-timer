@@ -1,0 +1,360 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"6 ssd.c
+[; ;ssd.c: 6: tSSD_Value ssd_values[(2)] = {SSD_NULL};
+[c E10 0 1 2 3 4 5 6 7 8 9 10 .. ]
+[n E10 . SSD_0 SSD_1 SSD_2 SSD_3 SSD_4 SSD_5 SSD_6 SSD_7 SSD_8 SSD_9 SSD_NULL  ]
+"23
+[; ;ssd.c: 23: void SSD_Init(tSSD ssd, tSSD_State initial_state, tSSD_Value initial_value)
+[c E2 0 1 .. ]
+[n E2 . SSD_L SSD_R  ]
+[c E6 0 1 .. ]
+[n E6 . SSD_OFF SSD_ON  ]
+"28
+[; ;ssd.c: 28:     GPIO_InitPort(PORT_C, GPIO_OUTPUT);
+[c E38 0 1 2 .. ]
+[n E38 . PORT_A PORT_B PORT_C  ]
+[c E43 0 1 .. ]
+[n E43 . GPIO_OUTPUT GPIO_INPUT  ]
+"29 ./gpio.h
+[; ;./gpio.h: 29: void GPIO_InitPort(tPort port, tPortDirection direction);
+[v _GPIO_InitPort `(v ~T0 @X0 0 ef2`E38`E43 ]
+"32
+[; ;./gpio.h: 32: void GPIO_SetPortState(tPort port, unsigned char state);
+[v _GPIO_SetPortState `(v ~T0 @X0 0 ef2`E38`uc ]
+"28
+[; ;./gpio.h: 28: void GPIO_InitPortPin(tPort port, unsigned char pin, tPortDirection direction);
+[v _GPIO_InitPortPin `(v ~T0 @X0 0 ef3`E38`uc`E43 ]
+"45 ./ssd.h
+[; ;./ssd.h: 45: void SSD_SetState(tSSD ssd, tSSD_State state);
+[v _SSD_SetState `(v ~T0 @X0 0 ef2`E2`E6 ]
+"44
+[; ;./ssd.h: 44: void SSD_SetValue(tSSD ssd, tSSD_Value value);
+[v _SSD_SetValue `(v ~T0 @X0 0 ef2`E2`E10 ]
+"31 ./gpio.h
+[; ;./gpio.h: 31: void GPIO_SetPortPinState(tPort port, unsigned char pin, unsigned char state);
+[v _GPIO_SetPortPinState `(v ~T0 @X0 0 ef3`E38`uc`uc ]
+"33
+[; ;./gpio.h: 33: unsigned char GPIO_GetPortPinState(tPort port, unsigned char pin);
+[v _GPIO_GetPortPinState `(uc ~T0 @X0 0 ef2`E38`uc ]
+"6 ssd.c
+[; ;ssd.c: 6: tSSD_Value ssd_values[(2)] = {SSD_NULL};
+[v _ssd_values `E10 ~T0 @X0 -> 2 `i e ]
+[i _ssd_values
+:U ..
+. `E10 10
+..
+]
+"8
+[; ;ssd.c: 8: static unsigned char ssd_data[] =
+[v _ssd_data `uc ~T0 @X0 -> 11 `i s ]
+[i _ssd_data
+:U ..
+-> -> 192 `i `uc
+-> -> 249 `i `uc
+-> -> 164 `i `uc
+-> -> 176 `i `uc
+-> -> 153 `i `uc
+-> -> 146 `i `uc
+-> -> 130 `i `uc
+-> -> 248 `i `uc
+-> -> 128 `i `uc
+-> -> 144 `i `uc
+-> -> 0 `i `uc
+..
+]
+"23
+[; ;ssd.c: 23: void SSD_Init(tSSD ssd, tSSD_State initial_state, tSSD_Value initial_value)
+[v _SSD_Init `(v ~T0 @X0 1 ef3`E2`E6`E10 ]
+"24
+[; ;ssd.c: 24: {
+{
+[e :U _SSD_Init ]
+"23
+[; ;ssd.c: 23: void SSD_Init(tSSD ssd, tSSD_State initial_state, tSSD_Value initial_value)
+[v _ssd `E2 ~T0 @X0 1 r1 ]
+[v _initial_state `E6 ~T0 @X0 1 r2 ]
+[v _initial_value `E10 ~T0 @X0 1 r3 ]
+"24
+[; ;ssd.c: 24: {
+[f ]
+"28
+[; ;ssd.c: 28:     GPIO_InitPort(PORT_C, GPIO_OUTPUT);
+[e ( _GPIO_InitPort (2 , . `E38 2 . `E43 0 ]
+"29
+[; ;ssd.c: 29:     GPIO_SetPortState(PORT_C, ssd_data[SSD_NULL]);
+[e ( _GPIO_SetPortState (2 , . `E38 2 *U + &U _ssd_data * -> . `E10 10 `ux -> -> # *U &U _ssd_data `ui `ux ]
+"33
+[; ;ssd.c: 33:     switch(ssd)
+[e $U 3  ]
+"34
+[; ;ssd.c: 34:     {
+{
+"35
+[; ;ssd.c: 35:         case SSD_L:
+[e :U 4 ]
+"36
+[; ;ssd.c: 36:             GPIO_InitPortPin(PORT_A, 6, GPIO_OUTPUT);
+[e ( _GPIO_InitPortPin (3 , , . `E38 0 -> -> 6 `i `uc . `E43 0 ]
+"37
+[; ;ssd.c: 37:             break;
+[e $U 2  ]
+"38
+[; ;ssd.c: 38:         case SSD_R:
+[e :U 5 ]
+"39
+[; ;ssd.c: 39:             GPIO_InitPortPin(PORT_A, 7, GPIO_OUTPUT);
+[e ( _GPIO_InitPortPin (3 , , . `E38 0 -> -> 7 `i `uc . `E43 0 ]
+"40
+[; ;ssd.c: 40:             break;
+[e $U 2  ]
+"41
+[; ;ssd.c: 41:         default:
+[e :U 6 ]
+"44
+[; ;ssd.c: 44:             break;
+[e $U 2  ]
+"45
+[; ;ssd.c: 45:     }
+}
+[e $U 2  ]
+[e :U 3 ]
+[e [\ -> _ssd `ui , $ -> . `E2 0 `ui 4
+ , $ -> . `E2 1 `ui 5
+ 6 ]
+[e :U 2 ]
+"49
+[; ;ssd.c: 49:     SSD_SetState(ssd, initial_state);
+[e ( _SSD_SetState (2 , _ssd _initial_state ]
+"53
+[; ;ssd.c: 53:     SSD_SetValue(ssd, initial_value);
+[e ( _SSD_SetValue (2 , _ssd _initial_value ]
+"54
+[; ;ssd.c: 54: }
+[e :UE 1 ]
+}
+"56
+[; ;ssd.c: 56: void SSD_Update(void)
+[v _SSD_Update `(v ~T0 @X0 1 ef ]
+"57
+[; ;ssd.c: 57: {
+{
+[e :U _SSD_Update ]
+[f ]
+"58
+[; ;ssd.c: 58:     static tSSD current_ssd = SSD_L;
+[v F72 `E2 ~T0 @X0 1 s current_ssd ]
+[i F72
+. `E2 0
+]
+"61
+[; ;ssd.c: 61:     SSD_SetState(SSD_L, SSD_OFF);
+[e ( _SSD_SetState (2 , . `E2 0 . `E6 0 ]
+"62
+[; ;ssd.c: 62:     SSD_SetState(SSD_R, SSD_OFF);
+[e ( _SSD_SetState (2 , . `E2 1 . `E6 0 ]
+"66
+[; ;ssd.c: 66:     GPIO_SetPortState(PORT_C, ssd_data[ssd_values[current_ssd]]);
+[e ( _GPIO_SetPortState (2 , . `E38 2 *U + &U _ssd_data * -> *U + &U _ssd_values * -> F72 `ux -> -> # *U &U _ssd_values `ui `ux `ux -> -> # *U &U _ssd_data `ui `ux ]
+"70
+[; ;ssd.c: 70:     SSD_SetState(current_ssd, SSD_ON);
+[e ( _SSD_SetState (2 , F72 . `E6 1 ]
+"72
+[; ;ssd.c: 72:     if(current_ssd == SSD_R)
+[e $ ! == -> F72 `ui -> . `E2 1 `ui 8  ]
+"73
+[; ;ssd.c: 73:     {
+{
+"74
+[; ;ssd.c: 74:        current_ssd = SSD_L;
+[e = F72 . `E2 0 ]
+"75
+[; ;ssd.c: 75:     }
+}
+[e $U 9  ]
+"76
+[; ;ssd.c: 76:     else
+[e :U 8 ]
+"77
+[; ;ssd.c: 77:     {
+{
+"78
+[; ;ssd.c: 78:         current_ssd++;
+[e ++ F72 -> -> 1 `i `E2 ]
+"79
+[; ;ssd.c: 79:     }
+}
+[e :U 9 ]
+"80
+[; ;ssd.c: 80: }
+[e :UE 7 ]
+}
+"82
+[; ;ssd.c: 82: void SSD_SetValue(tSSD ssd, tSSD_Value value)
+[v _SSD_SetValue `(v ~T0 @X0 1 ef2`E2`E10 ]
+"83
+[; ;ssd.c: 83: {
+{
+[e :U _SSD_SetValue ]
+"82
+[; ;ssd.c: 82: void SSD_SetValue(tSSD ssd, tSSD_Value value)
+[v _ssd `E2 ~T0 @X0 1 r1 ]
+[v _value `E10 ~T0 @X0 1 r2 ]
+"83
+[; ;ssd.c: 83: {
+[f ]
+"84
+[; ;ssd.c: 84:     ssd_values[ssd] = value;
+[e = *U + &U _ssd_values * -> _ssd `ux -> -> # *U &U _ssd_values `ui `ux _value ]
+"85
+[; ;ssd.c: 85: }
+[e :UE 10 ]
+}
+"86
+[; ;ssd.c: 86: void SSD_SetState(tSSD ssd, tSSD_State state)
+[v _SSD_SetState `(v ~T0 @X0 1 ef2`E2`E6 ]
+"87
+[; ;ssd.c: 87: {
+{
+[e :U _SSD_SetState ]
+"86
+[; ;ssd.c: 86: void SSD_SetState(tSSD ssd, tSSD_State state)
+[v _ssd `E2 ~T0 @X0 1 r1 ]
+[v _state `E6 ~T0 @X0 1 r2 ]
+"87
+[; ;ssd.c: 87: {
+[f ]
+"88
+[; ;ssd.c: 88:     switch(ssd)
+[e $U 13  ]
+"89
+[; ;ssd.c: 89:     {
+{
+"90
+[; ;ssd.c: 90:         case SSD_L:
+[e :U 14 ]
+"91
+[; ;ssd.c: 91:             GPIO_SetPortPinState(PORT_A, 6, state);
+[e ( _GPIO_SetPortPinState (3 , , . `E38 0 -> -> 6 `i `uc -> _state `uc ]
+"92
+[; ;ssd.c: 92:             break;
+[e $U 12  ]
+"93
+[; ;ssd.c: 93:         case SSD_R:
+[e :U 15 ]
+"94
+[; ;ssd.c: 94:             GPIO_SetPortPinState(PORT_A, 7, state);
+[e ( _GPIO_SetPortPinState (3 , , . `E38 0 -> -> 7 `i `uc -> _state `uc ]
+"95
+[; ;ssd.c: 95:             break;
+[e $U 12  ]
+"96
+[; ;ssd.c: 96:         default:
+[e :U 16 ]
+"99
+[; ;ssd.c: 99:             break;
+[e $U 12  ]
+"100
+[; ;ssd.c: 100:     }
+}
+[e $U 12  ]
+[e :U 13 ]
+[e [\ -> _ssd `ui , $ -> . `E2 0 `ui 14
+ , $ -> . `E2 1 `ui 15
+ 16 ]
+[e :U 12 ]
+"101
+[; ;ssd.c: 101: }
+[e :UE 11 ]
+}
+"102
+[; ;ssd.c: 102: tSSD_Value SSD_GetValue(tSSD ssd)
+[v _SSD_GetValue `(E10 ~T0 @X0 1 ef1`E2 ]
+"103
+[; ;ssd.c: 103: {
+{
+[e :U _SSD_GetValue ]
+"102
+[; ;ssd.c: 102: tSSD_Value SSD_GetValue(tSSD ssd)
+[v _ssd `E2 ~T0 @X0 1 r1 ]
+"103
+[; ;ssd.c: 103: {
+[f ]
+"104
+[; ;ssd.c: 104:    tSSD_Value ret = SSD_NULL;
+[v _ret `E10 ~T0 @X0 1 a ]
+[e = _ret . `E10 10 ]
+"106
+[; ;ssd.c: 106:    ret = ssd_values[ssd];
+[e = _ret *U + &U _ssd_values * -> _ssd `ux -> -> # *U &U _ssd_values `ui `ux ]
+"108
+[; ;ssd.c: 108:    return ret;
+[e ) _ret ]
+[e $UE 17  ]
+"109
+[; ;ssd.c: 109: }
+[e :UE 17 ]
+}
+"110
+[; ;ssd.c: 110: tSSD_State SSD_GetState(tSSD ssd)
+[v _SSD_GetState `(E6 ~T0 @X0 1 ef1`E2 ]
+"111
+[; ;ssd.c: 111: {
+{
+[e :U _SSD_GetState ]
+"110
+[; ;ssd.c: 110: tSSD_State SSD_GetState(tSSD ssd)
+[v _ssd `E2 ~T0 @X0 1 r1 ]
+"111
+[; ;ssd.c: 111: {
+[f ]
+"112
+[; ;ssd.c: 112:     tSSD_State ret = SSD_OFF;
+[v _ret `E6 ~T0 @X0 1 a ]
+[e = _ret . `E6 0 ]
+"114
+[; ;ssd.c: 114:     switch(ssd)
+[e $U 20  ]
+"115
+[; ;ssd.c: 115:     {
+{
+"116
+[; ;ssd.c: 116:         case SSD_L:
+[e :U 21 ]
+"117
+[; ;ssd.c: 117:             ret = GPIO_GetPortPinState(PORT_A, 6);
+[e = _ret -> ( _GPIO_GetPortPinState (2 , . `E38 0 -> -> 6 `i `uc `E6 ]
+"118
+[; ;ssd.c: 118:             break;
+[e $U 19  ]
+"119
+[; ;ssd.c: 119:         case SSD_R:
+[e :U 22 ]
+"120
+[; ;ssd.c: 120:             ret = GPIO_GetPortPinState(PORT_A, 7);
+[e = _ret -> ( _GPIO_GetPortPinState (2 , . `E38 0 -> -> 7 `i `uc `E6 ]
+"121
+[; ;ssd.c: 121:             break;
+[e $U 19  ]
+"122
+[; ;ssd.c: 122:         default:
+[e :U 23 ]
+"124
+[; ;ssd.c: 124:             break;
+[e $U 19  ]
+"125
+[; ;ssd.c: 125:     }
+}
+[e $U 19  ]
+[e :U 20 ]
+[e [\ -> _ssd `ui , $ -> . `E2 0 `ui 21
+ , $ -> . `E2 1 `ui 22
+ 23 ]
+[e :U 19 ]
+"126
+[; ;ssd.c: 126:     return ret;
+[e ) _ret ]
+[e $UE 18  ]
+"127
+[; ;ssd.c: 127: }
+[e :UE 18 ]
+}
